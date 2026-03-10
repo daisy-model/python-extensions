@@ -1,0 +1,43 @@
+[build-system]
+requires = [
+    "setuptools>=65",
+    "setuptools-scm>=8.0"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "daisy-extensions"
+version = "0.1.0"
+description = "Python extensions for Daisy"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.9"
+
+authors = [
+    { name = "Silas Nyboe Ørting" }
+]
+
+dependencies = []
+
+[tool.setuptools_scm]
+version_file = "daisy_extensions/_version.py"
+
+[tool.pylint.messages_control]
+ ignore = [
+     '_version.py',
+     '.venv'
+ ]
+
+[tool.coverage.run]
+command_line = "-m pytest"
+source = ["."]
+
+[tool.coverage.report]
+show_missing = "true"
+
+[dependency-groups]
+dev = [
+    "pylint>=3.3.9",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]
