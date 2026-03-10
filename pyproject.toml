@@ -11,7 +11,7 @@ version = "0.1.0"
 description = "Python extensions for Daisy"
 readme = "README.md"
 license = "GPL-3.0-or-later"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 
 authors = [
     { name = "Silas Nyboe Ørting" }
@@ -23,10 +23,15 @@ dependencies = []
 version_file = "daisy_extensions/_version.py"
 
 [tool.pylint.messages_control]
- ignore = [
+ignore = [
      '_version.py',
      '.venv'
- ]
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--basetemp=tests/tmp"
+]
 
 [tool.coverage.run]
 command_line = "-m pytest"
@@ -37,6 +42,8 @@ show_missing = "true"
 
 [dependency-groups]
 dev = [
+    "daisypy-io>=0.2.2",
+    "pandas>=3.0.1",
     "pylint>=3.3.9",
     "pytest>=8.4.2",
     "pytest-cov>=7.0.0",

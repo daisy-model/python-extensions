@@ -1,0 +1,51 @@
+(input file "dk-soil.dai")
+(input file "log-std.dai")
+
+(defreaction pyDenitN2O Python
+  "Use Python for chemical reaction." 
+  (module "daisy_extensions.reactions.default_denitrification")
+  (soil "default_denitrification")
+  (in (NO3 M_primary "NO3"))
+  (texture 
+   ("clay" 2 [um])
+   ("below50" 50 [um])
+   )
+  (extra Theta rho_b CO2_C CO2_C_fast Theta_sat h)
+  (out 
+   (N2O none "N2O-Denit")
+   (NO3 primary "NO3")
+   (Act-Denit none "Actual-Denit")
+   (Pot-Denit none "Potential-Denit")
+   (N2 none "N2-Denit") ) )
+
+(defchemistry pyChem N (reaction pyDenitN2O nitrification))
+
+(deflog "Python reaction soil" column
+  "Log N2 and N2O output from Python."
+  (declare unit String "Base unit.")
+  (unit "g/cm^3/h")
+  (where "${colfid}soil_python.dlf")
+  (when hourly)
+  (entries
+   (interval 
+    (path column "${column}" Chemistry "*" combine "pyChem" reaction pyDenitN2O "N2-Denit")
+    (handle sum)
+    (negate false)
+    (factor 1e5)  ; g/cm^2 -> kg/ha
+    (dimension "kg N2O-N/ha"))
+   (interval 
+    (path column "${column}" Chemistry "*" combine "pyChem" reaction pyDenitN2O "N2O-Denit")
+    (handle sum)
+    (negate false)
+    (factor 1e5)  ; g/cm^2 -> kg/ha
+    (dimension "kg N2O-N/ha"))
+   ))
+
+(defprogram MySim Daisy
+  (column (Askov (Chemistry multi (combine DOM pyChem))))
+  (weather none)
+  (output ("Python reaction soil"))
+  (manager activity)
+  (time 1000 1 1 0)
+  (stop 1000 1 2 0))
+(run MySim)
