@@ -35,7 +35,22 @@ Once you are happy with your extension you should create a test for it and add i
     └── reactions
         └── test_my_new_reaction.py
 ```
-You tests should not depend on a Daisy executable being available.
+You should write tests that directly call the python function and tests that run daisy.
+
+You can use the `default_denitrification` example as a starting point
+```
+├── daisy_extensions
+│   └── reactions
+│       ├── default_denitrification.py
+└── tests
+    └── reactions
+        ├── test-data
+        │   ├── default-denitrification-args-and-targets.csv
+        │   ├── default-denitrification.dai
+        │   ├── expected-default-denitrification.csv
+        ├── test_default_denitrification.py
+```
+
 
 ### Dependencies
 If your extension has any external dependencies you should add them to the `pyproject.toml` under `dependencies`. We recommend using [uv](https://docs.astral.sh/uv/) for this. For example, to add `numpy` and `pandas`
