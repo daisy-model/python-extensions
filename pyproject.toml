@@ -14,7 +14,8 @@ license = "GPL-3.0-or-later"
 requires-python = ">=3.11"
 
 authors = [
-    { name = "Silas Nyboe Ørting" }
+    { name = "Silas Nyboe Ørting" },
+    { name = " Tobias Klöffel" },
 ]
 
 dependencies = []
