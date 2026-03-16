@@ -3,7 +3,7 @@
 ## Installation
 Clone the repository and install it in your Daisy python environment
 ```
-git clone git@github.com:daisy-model/python-extensions.git
+git clone https://github.com/daisy-model/python-extensions.git
 cd python-extensions
 daisy --pip install -e .
 ```
